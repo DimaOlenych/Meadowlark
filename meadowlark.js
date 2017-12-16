@@ -16,7 +16,9 @@ app.get('/', function(req, res) {
 
 // about page
 app.get('/about', function(req, res) {
-    res.render('about');
+    var randomFortune = fortunes[Math.floor(Math.random() *
+        fortunes.length)];
+    res.render('about', { fortune: randomFortune });
 });
 
 // page 404
@@ -36,3 +38,11 @@ app.listen(app.get('port'), function() {
     console.log('Express запущен на http://localhost:' +
         app.get('port') + '; нажмите Ctrl+C для завершения.');
 });
+
+var fortunes = [
+    "Победи свои страхи, или они победят тебя.",
+    "Рекам нужны истоки.",
+    "Не бойся неведомого.",
+    "Тебя ждет приятный сюрприз.",
+    "Будь проще везде, где только можно."
+];
