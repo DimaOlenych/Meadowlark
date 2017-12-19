@@ -10,6 +10,13 @@ app.set('view engine', 'handlebars');
 app.set('port', process.env.PORT || 3000);
 app.use(express.static(__dirname + '/public'));
 
+// tests
+app.use(function(req, res, next) {
+    res.locals.showTests = app.get('env') !== 'production' &&
+        req.query.test === '1';
+    next();
+});
+
 // home page
 app.get('/', function(req, res) {
     res.render('home');
@@ -17,7 +24,10 @@ app.get('/', function(req, res) {
 
 // about page
 app.get('/about', function(req, res) {
-    res.render('about', { fortune: fortune.getFortune() });
+    res.render('about', {
+        fortune: fortune.getFortune(),
+        pageTestScript: '/qa/tests-about.js'
+    });
 });
 
 // page 404
@@ -37,11 +47,3 @@ app.listen(app.get('port'), function() {
     console.log('Express запущен на http://localhost:' +
         app.get('port') + '; нажмите Ctrl+C для завершения.');
 });
-
-// var fortunes = [
-//     "Победи свои страхи, или они победят тебя.",
-//     "Рекам нужны истоки.",
-//     "Не бойся неведомого.",
-//     "Тебя ждет приятный сюрприз.",
-//     "Будь проще везде, где только можно."
-// ];
