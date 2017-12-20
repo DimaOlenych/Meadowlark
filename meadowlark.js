@@ -30,6 +30,16 @@ app.get('/about', function(req, res) {
     });
 });
 
+// hood-river page
+app.get('/tours/hood-river', function(req, res) {
+    res.render('tours/hood-river');
+});
+
+// request-group-rate
+app.get('/tours/request-group-rate', function(req, res) {
+    res.render('tours/request-group-rate');
+});
+
 // page 404
 app.use(function(req, res, next) {
     res.status(404);
