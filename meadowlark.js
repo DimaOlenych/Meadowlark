@@ -35,7 +35,7 @@ app.get('/tours/hood-river', function(req, res) {
     res.render('tours/hood-river');
 });
 
-// request-group-rate
+// request-group-rate page
 app.get('/tours/request-group-rate', function(req, res) {
     res.render('tours/request-group-rate');
 });
