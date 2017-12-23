@@ -1,11 +1,22 @@
 var express = require('express');
+var fortune = require('./lib/fortune.js');
 var app = express();
-var fortune = require('./lib/fortune.js')
 
 // handlebars
-var handlebars = require('express-handlebars');
-app.engine('handlebars', handlebars({ defaultLayout: 'main' }));
+// set up handlebars view engine
+var handlebars = require('express-handlebars').create({
+    defaultLayout: 'main',
+    helpers: {
+        section: function(name, options) {
+            if (!this._sections) this._sections = {};
+            this._sections[name] = options.fn(this);
+            return null;
+        }
+    }
+});
+app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
+
 
 app.set('port', process.env.PORT || 3000);
 app.use(express.static(__dirname + '/public'));
@@ -33,6 +44,11 @@ app.get('/about', function(req, res) {
 // hood-river page
 app.get('/tours/hood-river', function(req, res) {
     res.render('tours/hood-river');
+});
+
+// oregon-coast page
+app.get('/tours/oregon-coast', function(req, res) {
+    res.render('tours/oregon-coast');
 });
 
 // request-group-rate page
